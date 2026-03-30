@@ -1,0 +1,100 @@
+# ⚡ BOM Risk Analyzer — Smart Speaker
+
+A supply chain risk intelligence dashboard for analyzing semiconductor and component risk across a consumer electronics Bill of Materials (BOM).
+
+Built to simulate the kind of risk visibility work done by supply chain teams at Apple, Google Hardware, Meta, and Sonos.
+
+---
+
+## 🎯 Problem Statement
+
+Consumer electronics manufacturers source 15–50+ components per product from suppliers across Taiwan, China, South Korea, Japan, and the US. Each component carries distinct risk exposure across four dimensions:
+
+- **Single-source exposure** — is there only one supplier capable of fulfilling this component?
+- **Geographic concentration** — how exposed is the supply chain to geopolitical or trade disruption by country?
+- **Lead time volatility** — how unpredictable are supplier lead times?
+- **Substitutability** — how easily can this component be swapped for an alternative?
+
+This tool scores every BOM line item across all four dimensions and surfaces a composite risk score and tier (Critical / Elevated / Low).
+
+---
+
+## 📊 Features
+
+- **Interactive risk heatmap** — all components ranked by composite risk score
+- **Geographic exposure donut chart** — annual spend concentration by supplier country
+- **Risk radar chart** — multi-dimension breakdown for top 5 highest-risk components
+- **Adjustable scoring weights** — shift weight between risk dimensions via sidebar sliders
+- **Filterable BOM table** — filter by category, risk tier, or supplier country
+
+---
+
+## 🧠 Risk Scoring Methodology
+
+Each component receives a score (0–100) across four dimensions:
+
+| Dimension | Description | Default Weight |
+|---|---|---|
+| Single-Source Exposure | Single-sourced = 100; more alternatives = lower score | 35% |
+| Geographic Concentration | Taiwan = 90 (TSMC risk); USA = 20 | 25% |
+| Lead Time Volatility | High = 90, Medium = 55, Low = 20 | 25% |
+| Substitutability | Inverse of sourcing flexibility | 15% |
+
+Composite score = weighted average of all four dimensions. Weights are fully adjustable in the dashboard.
+
+**Risk Tiers:**
+- 🔴 Critical: Score ≥ 70
+- 🟡 Elevated: Score 45–69
+- 🟢 Low: Score < 45
+
+---
+
+## 🚀 Running Locally
+
+```bash
+# 1. Clone the repo
+git clone https://github.com/yourusername/bom-risk-analyzer.git
+cd bom-risk-analyzer
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Run the dashboard
+streamlit run app.py
+```
+
+---
+
+## 📁 File Structure
+
+```
+bom-risk-analyzer/
+├── app.py                    # Streamlit dashboard
+├── risk_engine.py            # Risk scoring logic
+├── requirements.txt
+├── data/
+│   └── smart_speaker_bom.csv # BOM dataset (15 components)
+└── README.md
+```
+
+---
+
+## 💡 Key Findings (Smart Speaker BOM)
+
+- **Audio DSP** (Cirrus Logic) and **Far-Field Mic Array** (Knowles) are the highest-risk components — both single-sourced with high lead time volatility
+- **~68% of annual component spend** is concentrated in Taiwan and China — significant tariff and geopolitical exposure
+- **Semiconductor and Acoustic categories** carry the highest average risk scores
+- **WiFi/BT combo chip** (Qualcomm, 18-week lead time, high volatility) represents a critical connectivity bottleneck
+
+---
+
+## 🛠 Tech Stack
+
+- **Python** — data processing and risk scoring
+- **Streamlit** — interactive dashboard framework
+- **Plotly** — charts and visualizations
+- **Pandas** — data manipulation
+
+---
+
+*Built by Akash — Supply Chain Analyst with 5+ years in consumer hardware sourcing, inventory planning, and Asia-Pacific supplier management.*
